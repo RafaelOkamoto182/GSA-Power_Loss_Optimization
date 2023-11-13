@@ -37,10 +37,45 @@ if F_index==1
     results = runpf(mpc);
     sum(results.branch(:, PF))+sum(results.branch(:, PT));
 
-    %fit=sum(L.^2);
     fit=sum(results.branch(:, PF))+sum(results.branch(:, PT));
   end
 
+  if F_index==2
+
+    define_constants
+
+    mpc.gen(2, PG) = L(1);
+    mpc.gen(3, PG) = L(2);
+    mpc.gen(4, PG) = L(3);
+    mpc.gen(5, PG) = L(4);
+
+    mpc.bus(1, VM) = L(5);
+    mpc.gen(1, VG) = L(5);
+
+    mpc.bus(2, VM) = L(6);
+    mpc.gen(2, VG) = L(6);
+
+    mpc.bus(3, VM) = L(7);
+    mpc.gen(3, VG) = L(7);
+
+    mpc.bus(6, VM) = L(8);
+    mpc.gen(4, VG) = L(8);
+
+    mpc.bus(8, VM) = L(9);
+    mpc.gen(5, VG) = L(9);
+
+    mpc.branch(8,BR_STATUS) = L(10); %tap 4-7
+    mpc.branch(9,BR_STATUS) = L(11); %tap 4-9
+    mpc.branch(10,BR_STATUS) = L(12); %tap 5-6
+
+    mpc.bus(9,BS)=L(13);
+
+    results = runpf(mpc);
+    sum(results.branch(:, PF))+sum(results.branch(:, PT));
+
+    fit=sum(results.branch(:, PF))+sum(results.branch(:, PT));
+
+  endif
 ##if F_index==1
 ##fit=sum(L.^2);
 ##end
