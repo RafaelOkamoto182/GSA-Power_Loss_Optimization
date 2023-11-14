@@ -21,10 +21,10 @@ clear all;clc
 % MeanChart: The average fitnesses Chart over iterations.
 
  N=50;
- max_it=50;
+ max_it=12;
  ElitistCheck=1; Rpower=1;
  min_flag=1; % 1: minimization, 0: maximization
- number_of_runs = 1;
+ number_of_runs = 2;
 
  save_to_csv = 1; %1:save results and solutions to file, 0: do not save.
  file_name = 'GSA_results.csv'
@@ -45,6 +45,8 @@ clear all;clc
  results_matrix = [results_matrix; results_matrix_current_row];
 endfor
 
+Fbest_mean = mean(results_matrix(:,4))
+
 if save_to_csv==1
   if F_index==1
     csv_headers={'#run','N_iterations','elapsed_time','min_power_loss','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
@@ -54,9 +56,8 @@ if save_to_csv==1
   fprintf(fid, '%s\n', csv_headers{end});
   fclose(fid);
 
-% Append numerical data to the same CSV file
-dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',', 'precision', 6);
-
+  % Append numerical data to the same CSV file
+  dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',', 'precision', 6);
 
   end
 
