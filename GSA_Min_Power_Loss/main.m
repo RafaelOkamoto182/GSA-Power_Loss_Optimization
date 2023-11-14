@@ -21,7 +21,7 @@ clear all;clc
 % MeanChart: The average fitnesses Chart over iterations.
 
  N=50;
- max_it=100;
+ max_it=50;
  ElitistCheck=1; Rpower=1;
  min_flag=1; % 1: minimization, 0: maximization
  number_of_runs = 1;
@@ -55,7 +55,7 @@ if save_to_csv==1
   fclose(fid);
 
 % Append numerical data to the same CSV file
-dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',');
+dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',', 'precision', 6);
 
 
   end
