@@ -24,39 +24,48 @@ clear all;clc
  max_it=100;
  ElitistCheck=1; Rpower=1;
  min_flag=1; % 1: minimization, 0: maximization
+ number_of_runs = 1;
 
- F_index=1
+ save_to_csv = 1; %1:save results and solutions to file, 0: do not save.
+ file_name = 'GSA_results.csv'
+ results_matrix = [];
+
+
+ F_index=1;
+
+ for i=1:number_of_runs
+ tic;
+
  [Fbest,Lbest,BestChart,MeanChart]=GSA(F_index,N,max_it,ElitistCheck,min_flag,Rpower);
  Fbest
  Lbest
+ elapsed_time = toc
+
+ results_matrix_current_row = [i, N, elapsed_time, Fbest, Lbest];
+ results_matrix = [results_matrix; results_matrix_current_row];
+endfor
+
+if save_to_csv==1
+  if F_index==1
+    csv_headers={'#run','N_iterations','elapsed_time','min_power_loss','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
+    % Save headers to a CSV file
+  fid = fopen(file_name, 'w');
+  fprintf(fid, '%s,', csv_headers{1:end-1});
+  fprintf(fid, '%s\n', csv_headers{end});
+  fclose(fid);
+
+% Append numerical data to the same CSV file
+dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',');
 
 
- % #############  Resolvendo o FP para conferência do caso ótimo  ######################
- define_constants
- mpc= loadcase('case14');
- mpc.bus(1, VM) = Lbest(1);
-    mpc.gen(1, VG) = Lbest(1);
+  end
 
-    mpc.bus(2, VM) = Lbest(2);
-    mpc.gen(2, VG) = Lbest(2);
+  if F_index==2
+    csv_headers={'#run','N_iterations','elapsed_time','min_power_loss','Pg2','Pg3','Pg6','Pg8','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
 
-    mpc.bus(3, VM) = Lbest(3);
-    mpc.gen(3, VG) = Lbest(3);
+  end
 
-    mpc.bus(6, VM) = Lbest(4);
-    mpc.gen(4, VG) = Lbest(4);
-
-    mpc.bus(8, VM) = Lbest(5);
-    mpc.gen(5, VG) = Lbest(5);
-
-    mpc.branch(8,BR_STATUS) = Lbest(6); %tap 4-7
-    mpc.branch(9,BR_STATUS) = Lbest(7); %tap 4-9
-    mpc.branch(10,BR_STATUS) = Lbest(8); %tap 5-6
-
-    mpc.bus(9,BS)=Lbest(9);
-
-    results = runpf(mpc);
-
+  end
  semilogy(BestChart,'--k');
  title(['\fontsize{12}\bf F',num2str(F_index)]);
  xlabel('\fontsize{12}\bf Iteration');ylabel('\fontsize{12}\bf Best-so-far');
