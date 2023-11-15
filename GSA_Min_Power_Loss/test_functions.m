@@ -35,9 +35,8 @@ if F_index==1
     mpc.bus(9,BS)=L(9);
 
     results = runpf(mpc);
-    sum(results.branch(:, PF))+sum(results.branch(:, PT));
 
-    fit=sum(results.branch(:, PF))+sum(results.branch(:, PT));
+    fit=sum(results.branch(:, PF))+sum(results.branch(:, PT)); %PF: power from-bus, PT: power to-bus
   end
 
   if F_index==2
@@ -71,7 +70,6 @@ if F_index==1
     mpc.bus(9,BS)=L(13);
 
     results = runpf(mpc);
-    sum(results.branch(:, PF))+sum(results.branch(:, PT));
 
     fit=sum(results.branch(:, PF))+sum(results.branch(:, PT));
 
