@@ -21,53 +21,63 @@ clear all;clc
 % MeanChart: The average fitnesses Chart over iterations.
 
  N=50;
- max_it=12;
+ max_it=100;
  ElitistCheck=1; Rpower=1;
  min_flag=1; % 1: minimization, 0: maximization
- number_of_runs = 2;
+ number_of_runs = 3;
 
  save_to_csv = 1; %1:save results and solutions to file, 0: do not save.
- file_name = 'GSA_results.csv'
+ file_name = 'GSA_results_F2.csv'
  results_matrix = [];
 
 
- F_index=1;
+ F_index=2;
 
  for i=1:number_of_runs
  tic;
 
  [Fbest,Lbest,BestChart,MeanChart]=GSA(F_index,N,max_it,ElitistCheck,min_flag,Rpower);
- Fbest
- Lbest
- elapsed_time = toc
+ elapsed_time = toc;
 
- results_matrix_current_row = [i, N, elapsed_time, Fbest, Lbest];
+ results_matrix_current_row = [i, N, max_it, elapsed_time, Fbest, Lbest];
  results_matrix = [results_matrix; results_matrix_current_row];
 endfor
 
-Fbest_mean = mean(results_matrix(:,4))
+Fbest_mean = mean(results_matrix(:,5))
 
 if save_to_csv==1
   if F_index==1
-    csv_headers={'#run','N_iterations','elapsed_time','min_power_loss','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
-    % Save headers to a CSV file
-  fid = fopen(file_name, 'w');
-  fprintf(fid, '%s,', csv_headers{1:end-1});
-  fprintf(fid, '%s\n', csv_headers{end});
-  fclose(fid);
+    csv_headers={'#run','N_iterations','max_it/run','elapsed_time','min_power_loss','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
 
-  % Append numerical data to the same CSV file
-  dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',', 'precision', 6);
+    % Save headers to a CSV file
+    fid = fopen(file_name, 'w');
+    fprintf(fid, '%s,', csv_headers{1:end-1});
+    fprintf(fid, '%s\n', csv_headers{end});
+    fclose(fid);
+
+    % Append numerical data to the same CSV file
+    dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',', 'precision', 6);
 
   end
 
   if F_index==2
-    csv_headers={'#run','N_iterations','elapsed_time','min_power_loss','Pg2','Pg3','Pg6','Pg8','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
+    csv_headers={'#run','N_iterations','max_it/run','elapsed_time','min_power_loss','Pg2','Pg3','Pg6','Pg8','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
 
+    % Save headers to a CSV file
+    fid = fopen(file_name, 'w');
+    fprintf(fid, '%s,', csv_headers{1:end-1});
+    fprintf(fid, '%s\n', csv_headers{end});
+    fclose(fid);
+
+    % Append numerical data to the same CSV file
+    dlmwrite(file_name, results_matrix, '-append', 'delimiter', ',', 'precision', 6);
   end
 
-  end
- semilogy(BestChart,'--k');
+end
+
+ %problema: aqui ele só vai imprimir o grafico da ultima rodada. Precisa explicitar isso no trabalho ou imprimir mais graficos.
+ %semilogy(BestChart,'--k');
+ plot(BestChart, 'k');
  title(['\fontsize{12}\bf F',num2str(F_index)]);
  xlabel('\fontsize{12}\bf Iteration');ylabel('\fontsize{12}\bf Best-so-far');
  legend('\fontsize{10}\bf GSA',1);

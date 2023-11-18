@@ -16,7 +16,7 @@ TapUpperBound = 1.05;
 QshLowerBound = 0;
 QshUpperBound = 20;
 
-PgLowerBound = -100;
+PgLowerBound = 0;
 PgUpperBound = 100;
 
 dim=30;
