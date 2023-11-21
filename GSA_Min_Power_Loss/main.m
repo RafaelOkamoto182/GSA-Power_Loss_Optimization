@@ -21,10 +21,10 @@ clear all;clc
 % MeanChart: The average fitnesses Chart over iterations.
 
  N=50;
- max_it=10;
+ max_it=100;
  ElitistCheck=1; Rpower=1;
  min_flag=1; % 1: minimization, 0: maximization
- number_of_runs = 2;
+ number_of_runs = 5;
 
  save_to_csv = 1; %1:save results and solutions to file, 0: do not save.
  save_graphics = 1; %save plotting figures automatically
@@ -42,26 +42,23 @@ clear all;clc
  results_matrix_current_row = [iteration, N, max_it, elapsed_time, Fbest, Lbest];
  results_matrix = [results_matrix; results_matrix_current_row];
 
-  if save_graphics == 1
+ graph_title = ['F_index: ', num2str(F_index),', Run: ', num2str(iteration)];
 
-    graph_title = ['F_index: ', num2str(F_index),', Run: ', num2str(iteration)];
+ figure;
+ plot(BestChart, 'k');
+ title(['\fontsize{12}\bf ',graph_title]);
+ xlabel('\fontsize{12}\bf Iteration');ylabel('\fontsize{12}\bf Power Loss (MW)');
+   if F_index == 1
+     ylim([11,14]);
+    elseif F_index == 2
+      ylim([0,4]);
+    end
 
-    figure;
-    plot(BestChart, 'k');
-    title(['\fontsize{12}\bf ',graph_title]);
-    xlabel('\fontsize{12}\bf Iteration');ylabel('\fontsize{12}\bf Power Loss (MW)');
-      if F_index == 1
-        ylim([11,14]);
-
-      elseif F_index == 2
-        ylim([0,4]);
-      end
-
-  % Save the figure to a file
-  pictureFileName = sprintf('graphic_run_%d.png', iteration);
-  saveas(gcf, pictureFileName);
-
-  end
+    if save_graphics == 1
+      % Save the figure to a file
+      pictureFileName = sprintf('graphic_run_%d.png', iteration);
+      saveas(gcf, pictureFileName);
+    end
 
 endfor
 
