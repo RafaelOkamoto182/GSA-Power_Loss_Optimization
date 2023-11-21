@@ -49,7 +49,7 @@ clear all;clc
  title(['\fontsize{12}\bf ',graph_title]);
  xlabel('\fontsize{12}\bf Iteration');ylabel('\fontsize{12}\bf Power Loss (MW)');
    if F_index == 1
-     ylim([11,14]);
+     ylim([12,14.5]);
     elseif F_index == 2
       ylim([0,4]);
     end
