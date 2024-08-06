@@ -18,20 +18,19 @@ clear all;clc
 % Fbest: Best result.
 % Lbest: Best solution. The location of Fbest in search space.
 % BestChart: The best so far Chart over iterations.
-% MeanChart: The average fitnesses Chart over iterations.
+% MeanChart: The average fitnesses Ch7t over iterations.
 
+ F_index=1;
  N=50;
  max_it=100;
- ElitistCheck=1; Rpower=1;
+ ElitistCheck=0; Rpower=1;
  min_flag=1; % 1: minimization, 0: maximization
  number_of_runs = 5;
 
  save_to_csv = 1; %1:save results and solutions to file, 0: do not save.
  save_graphics = 1; %save plotting figures automatically
+
  results_matrix = [];
-
-
- F_index=2;
 
  for iteration=1:number_of_runs
  tic;
@@ -48,17 +47,17 @@ clear all;clc
  plot(BestChart, 'k');
  title(['\fontsize{12}\bf ',graph_title]);
  xlabel('\fontsize{12}\bf Iteration');ylabel('\fontsize{12}\bf Power Loss (MW)');
-   if F_index == 1
-     ylim([12,14.5]);
-    elseif F_index == 2
-      ylim([0,4]);
-    end
+##   if F_index == 1
+##     ylim([12,14.5]);
+##    elseif F_index == 2
+##      ylim([0,4]);
+##    end
 
-    if save_graphics == 1
-      % Save the figure to a file
-      pictureFileName = sprintf('graphic_run_%d.png', iteration);
-      saveas(gcf, pictureFileName);
-    end
+   if save_graphics == 1
+     % Save the figure to a file
+     pictureFileName = sprintf('graphic_run_%d.png', iteration);
+     saveas(gcf, pictureFileName);
+   end
 
 endfor
 
@@ -69,7 +68,7 @@ if save_to_csv==1
    file_name = ['GSA_results_F', num2str(F_index),'_maxit', num2str(max_it),'_NoR',num2str(number_of_runs),'.csv'];
 
   if F_index==1
-    csv_headers={'#run','N_iterations','max_it/run','elapsed_time','min_power_loss','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
+    csv_headers={'#run','N_agents','max_it/run','elapsed_time','min_power_loss','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
 
     % Save headers to a CSV file
     fid = fopen(file_name, 'w');
@@ -83,7 +82,7 @@ if save_to_csv==1
   end
 
   if F_index==2
-    csv_headers={'#run','N_iterations','max_it/run','elapsed_time','min_power_loss','Pg2','Pg3','Pg6','Pg8','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
+    csv_headers={'#run','N_agents','max_it/run','elapsed_time','min_power_loss','Pg2','Pg3','Pg6','Pg8','VG1', 'VG2', 'VG3', 'VG6', 'VG8', 'Tap4-7', 'Tap4-9', 'Tap5-6', 'Qsh9'};
 
     % Save headers to a CSV file
     fid = fopen(file_name, 'w');
