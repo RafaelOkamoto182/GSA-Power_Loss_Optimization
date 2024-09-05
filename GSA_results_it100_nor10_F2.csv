@@ -1,2 +1,0 @@
-#run,N_iterations,max_it/run,elapsed_time,min_power_loss,VG1,VG2,VG3,VG6,VG8,Tap4-7,Tap4-9,Tap5-6,Qsh9
-1,50,100,115.159,12.895,1.08788,1.07458,1.02204,1.09261,1.08612,1.03659,1.03024,0.987163,11.7055

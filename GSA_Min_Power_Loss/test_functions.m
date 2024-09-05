@@ -28,9 +28,9 @@ if F_index==1
     mpc.bus(8, VM) = L(5);
     mpc.gen(5, VG) = L(5);
 
-    mpc.branch(8,BR_STATUS) = L(6); %tap 4-7
-    mpc.branch(9,BR_STATUS) = L(7); %tap 4-9
-    mpc.branch(10,BR_STATUS) = L(8); %tap 5-6
+    mpc.branch(8,TAP) = L(6); %tap 4-7
+    mpc.branch(9,TAP) = L(7); %tap 4-9
+    mpc.branch(10,TAP) = L(8); %tap 5-6
 
     mpc.bus(9,BS)=L(9);
 
@@ -63,9 +63,9 @@ if F_index==1
     mpc.bus(8, VM) = L(9);
     mpc.gen(5, VG) = L(9);
 
-    mpc.branch(8,BR_STATUS) = L(10); %tap 4-7
-    mpc.branch(9,BR_STATUS) = L(11); %tap 4-9
-    mpc.branch(10,BR_STATUS) = L(12); %tap 5-6
+    mpc.branch(8,TAP) = L(10); %tap 4-7
+    mpc.branch(9,TAP) = L(11); %tap 4-9
+    mpc.branch(10,TAP) = L(12); %tap 5-6
 
     mpc.bus(9,BS)=L(13);
 
